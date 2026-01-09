@@ -61,6 +61,16 @@ export const TopNavigation = () => {
     { path: '/finance', label: 'Finance' },
   ];
 
+  const dataEntryItems = [
+    { path: '/enrollments', label: 'Enrollments', icon: UserPlus },
+    { path: '/patients', label: 'Patients', icon: Users },
+    { path: '/physicians', label: 'Physicians', icon: Stethoscope },
+    { path: '/invoices', label: 'Invoices', icon: Receipt },
+    { path: '/vac-requests', label: 'VAC Requests', icon: FileCheck },
+  ];
+
+  const isDataEntryActive = dataEntryItems.some(item => location.pathname === item.path);
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-card/95 backdrop-blur-sm">
       <div className="flex h-16 items-center justify-between px-6">
