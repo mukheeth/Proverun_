@@ -100,7 +100,7 @@ export default function LoginPage() {
           </div>
 
           <div className="text-sm text-secondary-foreground/60">
-            © 2024 MedDevice Corporation. All rights reserved.
+            © 2026 MedDevice Corporation. All rights reserved.
           </div>
         </div>
       </div>
