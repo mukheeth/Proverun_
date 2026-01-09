@@ -10,6 +10,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -19,6 +22,13 @@ import {
   User,
   HelpCircle,
   Activity,
+  Users,
+  UserPlus,
+  Stethoscope,
+  Receipt,
+  FileCheck,
+  ChevronDown,
+  Menu,
 } from 'lucide-react';
 import { notifications } from '@/data/mockData';
 
