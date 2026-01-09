@@ -17,6 +17,46 @@ import {
 } from 'lucide-react';
 import { notifications } from '@/data/mockData';
 
+// NotificationCard component moved outside the main component
+const NotificationCard = ({ notification, getIcon, getPriorityBadge }) => (
+  <div
+    className={`flex items-start gap-4 p-4 rounded-lg border transition-colors cursor-pointer ${
+      notification.priority === 'high'
+        ? 'bg-destructive/5 border-destructive/20 hover:bg-destructive/10'
+        : 'bg-card border-border/60 hover:bg-muted/30'
+    }`}
+  >
+    <div className="mt-0.5">{getIcon(notification.type)}</div>
+    <div className="flex-1 min-w-0">
+      <div className="flex items-start justify-between gap-2">
+        <div>
+          <p className="font-medium text-foreground">{notification.title}</p>
+          <p className="text-sm text-muted-foreground mt-0.5">{notification.message}</p>
+        </div>
+        {getPriorityBadge(notification.priority)}
+      </div>
+      <div className="flex items-center gap-3 mt-3">
+        <span className="text-xs text-muted-foreground flex items-center gap-1">
+          <Clock className="h-3 w-3" />
+          {notification.time}
+        </span>
+        <Button variant="ghost" size="sm" className="h-7 text-xs">
+          View Details
+          <ChevronRight className="h-3.5 w-3.5 ml-1" />
+        </Button>
+      </div>
+    </div>
+    <div className="flex gap-1">
+      <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-success">
+        <Check className="h-4 w-4" />
+      </Button>
+      <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-destructive">
+        <X className="h-4 w-4" />
+      </Button>
+    </div>
+  </div>
+);
+
 export default function NotificationsCenter() {
   const navigate = useNavigate();
 
@@ -55,45 +95,6 @@ export default function NotificationsCenter() {
       </Badge>
     );
   };
-
-  const NotificationCard = ({ notification }) => (
-    <div
-      className={`flex items-start gap-4 p-4 rounded-lg border transition-colors cursor-pointer ${
-        notification.priority === 'high'
-          ? 'bg-destructive/5 border-destructive/20 hover:bg-destructive/10'
-          : 'bg-card border-border/60 hover:bg-muted/30'
-      }`}
-    >
-      <div className="mt-0.5">{getIcon(notification.type)}</div>
-      <div className="flex-1 min-w-0">
-        <div className="flex items-start justify-between gap-2">
-          <div>
-            <p className="font-medium text-foreground">{notification.title}</p>
-            <p className="text-sm text-muted-foreground mt-0.5">{notification.message}</p>
-          </div>
-          {getPriorityBadge(notification.priority)}
-        </div>
-        <div className="flex items-center gap-3 mt-3">
-          <span className="text-xs text-muted-foreground flex items-center gap-1">
-            <Clock className="h-3 w-3" />
-            {notification.time}
-          </span>
-          <Button variant="ghost" size="sm" className="h-7 text-xs">
-            View Details
-            <ChevronRight className="h-3.5 w-3.5 ml-1" />
-          </Button>
-        </div>
-      </div>
-      <div className="flex gap-1">
-        <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-success">
-          <Check className="h-4 w-4" />
-        </Button>
-        <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-destructive">
-          <X className="h-4 w-4" />
-        </Button>
-      </div>
-    </div>
-  );
 
   const urgentCount = allNotifications.filter(n => n.priority === 'high').length;
 
