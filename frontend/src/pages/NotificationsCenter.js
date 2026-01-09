@@ -131,7 +131,7 @@ export default function NotificationsCenter() {
 
         <TabsContent value="all" className="space-y-3">
           {allNotifications.map((notification) => (
-            <NotificationCard key={notification.id} notification={notification} />
+            <NotificationCard key={notification.id} notification={notification} getIcon={getIcon} getPriorityBadge={getPriorityBadge} />
           ))}
         </TabsContent>
 
@@ -139,7 +139,7 @@ export default function NotificationsCenter() {
           {allNotifications
             .filter(n => n.priority === 'high')
             .map((notification) => (
-              <NotificationCard key={notification.id} notification={notification} />
+              <NotificationCard key={notification.id} notification={notification} getIcon={getIcon} getPriorityBadge={getPriorityBadge} />
             ))}
         </TabsContent>
 
@@ -147,7 +147,7 @@ export default function NotificationsCenter() {
           {allNotifications
             .filter(n => n.type === 'alert' || n.type === 'warning')
             .map((notification) => (
-              <NotificationCard key={notification.id} notification={notification} />
+              <NotificationCard key={notification.id} notification={notification} getIcon={getIcon} getPriorityBadge={getPriorityBadge} />
             ))}
         </TabsContent>
 
@@ -155,7 +155,7 @@ export default function NotificationsCenter() {
           {allNotifications
             .filter(n => n.type === 'info' || n.type === 'success')
             .map((notification) => (
-              <NotificationCard key={notification.id} notification={notification} />
+              <NotificationCard key={notification.id} notification={notification} getIcon={getIcon} getPriorityBadge={getPriorityBadge} />
             ))}
         </TabsContent>
       </Tabs>
