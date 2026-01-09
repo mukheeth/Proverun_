@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { FilterProvider } from '@/contexts/FilterContext';
 import { AuthProvider, useAuth } from '@/contexts/AuthContext';
 import { AppLayout } from '@/components/layout/AppLayout';
@@ -95,12 +95,12 @@ const AppRoutes = () => {
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
+      <HashRouter>
         <AuthProvider>
           <AppRoutes />
           <Toaster position="top-right" />
         </AuthProvider>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   );
 }

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Proverum</title>
+    <script>
+      // Single Page Apps for GitHub Pages
+      // https://github.com/rafgraph/spa-github-pages
+      // This script takes the current url and converts the path and query
+      // string into just a query string, and then redirects the browser to
+      // that new url with only a query string and hash fragment,
+      // e.g. https://www.foo.tld/one/two?a=b&c=d#qwe, becomes
+      // https://www.foo.tld/?/one/two&a=b~and~c=d#qwe
+      // Note: this 404.html file must be at least 512 bytes for some browsers.
+      // Otherwise Chrome may treat it as an "error page" and won't run the script.
+      (function(l) {
+        if (l.search[1] === '/' ) {
+          var decoded = l.search.slice(1).split('&').map(function(s) { 
+            return s.replace(/~and~/g, '&')
+          }).join('?');
+          window.history.replaceState(null, null,
+              l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      }(window.location))
+    </script>
+  </head>
+  <body>
+    <script>
+      // Get the base path from the current URL
+      var pathSegments = window.location.pathname.split('/').filter(Boolean);
+      var basePath = pathSegments.length > 0 ? '/' + pathSegments[0] + '/' : '/';
+      // Redirect to index.html with hash routing
+      var redirectPath = basePath + 'index.html' + window.location.search + window.location.hash;
+      window.location.replace(redirectPath);
+    </script>
+  </body>
+</html>
+
