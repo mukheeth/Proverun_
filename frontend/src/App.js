@@ -1,39 +1,82 @@
-import { useEffect } from "react";
-import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
+import React, { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { FilterProvider } from '@/contexts/FilterContext';
+import { AuthProvider, useAuth } from '@/contexts/AuthContext';
+import { AppLayout } from '@/components/layout/AppLayout';
+import { Toaster } from '@/components/ui/sonner';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+// Pages
+import LoginPage from '@/pages/LoginPage';
+import ExecutiveDashboard from '@/pages/ExecutiveDashboard';
+import SalesDashboard from '@/pages/SalesDashboard';
+import ClinicalDetailView from '@/pages/ClinicalDetailView';
+import MarketAccessVAC from '@/pages/MarketAccessVAC';
+import OperationsSupplyChain from '@/pages/OperationsSupplyChain';
+import FinanceRevenue from '@/pages/FinanceRevenue';
+import NotificationsCenter from '@/pages/NotificationsCenter';
+import SettingsPage from '@/pages/SettingsPage';
+import ProfilePage from '@/pages/ProfilePage';
 
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
-  };
+// Protected Route Component
+const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated, checkAuth } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    helloWorldApi();
-  }, []);
+    if (!isAuthenticated) {
+      const hasStoredAuth = checkAuth();
+      if (!hasStoredAuth) {
+        navigate('/login', { state: { from: location } });
+      }
+    }
+  }, [isAuthenticated, checkAuth, navigate, location]);
 
+  if (!isAuthenticated) {
+    return null;
+  }
+
+  return children;
+};
+
+// App Routes
+const AppRoutes = () => {
   return (
-    <div>
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
+    <Routes>
+      {/* Public Routes */}
+      <Route path="/login" element={<LoginPage />} />
+      
+      {/* Protected Routes with App Layout */}
+      <Route
+        path="/"
+        element={
+          <ProtectedRoute>
+            <FilterProvider>
+              <AppLayout />
+            </FilterProvider>
+          </ProtectedRoute>
+        }
+      >
+        {/* Default redirect to dashboard */}
+        <Route index element={<Navigate to="/dashboard" replace />} />
+        
+        {/* Main Pages */}
+        <Route path="dashboard" element={<ExecutiveDashboard />} />
+        <Route path="sales" element={<SalesDashboard />} />
+        <Route path="clinical" element={<ClinicalDetailView />} />
+        <Route path="vac" element={<MarketAccessVAC />} />
+        <Route path="operations" element={<OperationsSupplyChain />} />
+        <Route path="finance" element={<FinanceRevenue />} />
+        
+        {/* Supporting Pages */}
+        <Route path="notifications" element={<NotificationsCenter />} />
+        <Route path="settings" element={<SettingsPage />} />
+        <Route path="profile" element={<ProfilePage />} />
+        
+        {/* Catch all - redirect to dashboard */}
+        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+      </Route>
+    </Routes>
   );
 };
 
@@ -41,11 +84,10 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
+        <AuthProvider>
+          <AppRoutes />
+          <Toaster position="top-right" />
+        </AuthProvider>
       </BrowserRouter>
     </div>
   );
