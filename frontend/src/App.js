@@ -16,6 +16,11 @@ import FinanceRevenue from '@/pages/FinanceRevenue';
 import NotificationsCenter from '@/pages/NotificationsCenter';
 import SettingsPage from '@/pages/SettingsPage';
 import ProfilePage from '@/pages/ProfilePage';
+import EnrollmentsPage from '@/pages/EnrollmentsPage';
+import PatientsPage from '@/pages/PatientsPage';
+import PhysiciansPage from '@/pages/PhysiciansPage';
+import InvoicesPage from '@/pages/InvoicesPage';
+import VACRequestsPage from '@/pages/VACRequestsPage';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
